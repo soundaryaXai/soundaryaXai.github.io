@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soundarya — Data Analyst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0A0A0C;
+  --bg2: #111114;
+  --surface: #16161A;
+  --border: #1F1F26;
+  --border2: #2C2C36;
+  --text: #E2E2EC;
+  --muted: #72728A;
+  --faint: #3A3A4A;
+  --accent: #00D4A0;
+  --accent2: #00A87E;
+  --amber: #F0A030;
+  --blue: #6090F0;
+  --pink: #C07AF0;
+  --mono: 'IBM Plex Mono', monospace;
+  --sans: 'IBM Plex Sans', sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--faint);border-radius:2px}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 6vw;height:58px;
+  border-bottom:1px solid var(--border);
+  background:rgba(10,10,12,0.85);
+  backdrop-filter:blur(16px);
+  transition:border-color .3s;
+}
+.nav-logo{
+  font-family:var(--mono);font-size:13px;color:var(--accent);
+  letter-spacing:0.04em;display:flex;align-items:center;gap:6px;
+}
+.nav-logo .prompt{color:var(--muted)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-size:13px;color:var(--muted);text-decoration:none;transition:color .15s;letter-spacing:0.01em}
+.nav-links a:hover{color:var(--text)}
+.nav-hire{
+  font-family:var(--mono);font-size:12px;letter-spacing:0.04em;
+  padding:7px 16px;border:1px solid var(--accent2);
+  color:var(--accent);border-radius:3px;text-decoration:none;
+  transition:background .15s;
+}
+.nav-hire:hover{background:rgba(0,212,160,0.08)}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+  padding:80px 6vw 60px;position:relative;overflow:hidden;
+}
+.grid-bg{
+  position:absolute;inset:0;
+  background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);
+  background-size:52px 52px;opacity:0.35;pointer-events:none;
+}
+.glow-blob{
+  position:absolute;width:700px;height:500px;
+  left:-200px;top:50%;transform:translateY(-55%);
+  background:radial-gradient(ellipse,rgba(0,212,160,0.055) 0%,transparent 65%);
+  pointer-events:none;
+}
+.hero-inner{position:relative;z-index:1;max-width:860px}
+.hero-tag{
+  font-family:var(--mono);font-size:11px;color:var(--accent);
+  letter-spacing:0.12em;text-transform:uppercase;
+  display:inline-flex;align-items:center;gap:8px;margin-bottom:1.75rem;
+}
+.hero-tag::before{content:'';width:20px;height:1px;background:var(--accent)}
+.hero-tag .dot{
+  width:6px;height:6px;border-radius:50%;background:var(--accent);
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+
+h1{
+  font-family:var(--mono);font-weight:500;
+  font-size:clamp(2rem,5.5vw,4.2rem);
+  line-height:1.12;letter-spacing:-0.025em;
+  margin-bottom:1.5rem;
+}
+h1 .line2{color:var(--muted)}
+.cursor-blink{
+  display:inline-block;width:3px;height:.82em;
+  background:var(--accent);vertical-align:middle;margin-left:3px;
+  animation:blink 1.1s step-end infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+.hero-sub{
+  font-size:16px;color:var(--muted);max-width:520px;
+  line-height:1.85;margin-bottom:2.75rem;
+}
+.hero-sub strong{color:var(--text);font-weight:400}
+
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:4rem}
+.btn-p{
+  font-family:var(--mono);font-size:13px;letter-spacing:0.02em;
+  padding:11px 24px;border-radius:3px;
+  background:var(--accent);color:#090909;font-weight:500;
+  text-decoration:none;transition:opacity .15s;
+}
+.btn-p:hover{opacity:.85}
+.btn-g{
+  font-family:var(--mono);font-size:13px;letter-spacing:0.02em;
+  padding:11px 24px;border-radius:3px;
+  border:1px solid var(--border2);color:var(--muted);
+  text-decoration:none;transition:border-color .15s,color .15s;
+}
+.btn-g:hover{border-color:var(--text);color:var(--text)}
+
+.hero-stats{
+  display:flex;gap:3rem;padding-top:2.5rem;
+  border-top:1px solid var(--border);flex-wrap:wrap;
+}
+.stat .n{font-family:var(--mono);font-size:1.9rem;color:var(--accent);font-weight:500;line-height:1}
+.stat .l{font-size:12px;color:var(--muted);margin-top:5px;letter-spacing:0.02em}
+
+/* ── SECTION BASE ── */
+section{padding:88px 6vw}
+.sec-label{
+  font-family:var(--mono);font-size:11px;color:var(--accent);
+  letter-spacing:0.12em;text-transform:uppercase;margin-bottom:.4rem;
+}
+h2{font-size:1.65rem;font-weight:500;line-height:1.2;margin-bottom:2.75rem}
+.alt-bg{background:var(--bg2)}
+
+/* ── ABOUT ── */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+.about-text p{color:var(--muted);line-height:1.9;font-size:15px;margin-bottom:1.25rem}
+.about-text p strong{color:var(--text);font-weight:400}
+.about-facts{display:flex;flex-direction:column;gap:0;border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.fact-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:0.875rem 1.25rem;border-bottom:1px solid var(--border);
+  background:var(--surface);
+}
+.fact-row:last-child{border-bottom:none}
+.fact-row .fk{font-size:12px;color:var(--muted);font-family:var(--mono)}
+.fact-row .fv{font-size:13px;color:var(--text);font-family:var(--mono)}
+
+/* ── SKILLS ── */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1px;border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.sk{
+  background:var(--surface);padding:1.375rem 1.5rem;
+  transition:background .15s;
+}
+.sk:hover{background:#1B1B20}
+.sk-name{font-family:var(--mono);font-size:13px;font-weight:500;margin-bottom:3px}
+.sk-sub{font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.5}
+.sk-bar{display:flex;gap:3px}
+.sk-bar span{height:2px;flex:1;border-radius:2px;background:var(--faint)}
+.sk-bar span.on{background:var(--accent)}
+
+/* ── PROJECTS ── */
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:1px;border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.proj{
+  background:var(--surface);padding:2rem;
+  display:flex;flex-direction:column;gap:14px;
+  transition:background .15s;position:relative;
+}
+.proj:hover{background:#1B1B20}
+.proj-num{
+  position:absolute;top:1.25rem;right:1.5rem;
+  font-family:var(--mono);font-size:11px;color:var(--faint);
+}
+.proj-tag{
+  font-family:var(--mono);font-size:10px;letter-spacing:0.08em;
+  padding:3px 9px;border-radius:3px;display:inline-block;width:fit-content;
+}
+.tg{background:rgba(0,212,160,.1);color:var(--accent)}
+.ta{background:rgba(240,160,48,.1);color:var(--amber)}
+.tb{background:rgba(96,144,240,.1);color:var(--blue)}
+.proj h3{font-size:1rem;font-weight:500;line-height:1.35}
+.proj p{font-size:13px;color:var(--muted);line-height:1.75;flex:1}
+.proj-insight{
+  background:rgba(0,212,160,.05);border:1px solid rgba(0,212,160,.12);
+  border-radius:4px;padding:.625rem .875rem;
+  font-size:12px;color:var(--accent);line-height:1.5;font-family:var(--mono);
+}
+.proj-insight::before{content:'↳ ';opacity:.6}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-family:var(--mono);font-size:11px;background:var(--border);color:var(--muted);padding:3px 8px;border-radius:3px}
+.proj-links{display:flex;gap:16px}
+.proj-links a{font-size:12px;font-family:var(--mono);color:var(--muted);text-decoration:none;transition:color .15s}
+.proj-links a:hover{color:var(--accent)}
+
+/* ── PROCESS ── */
+.process{display:flex;flex-direction:column;border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.pstep{
+  display:grid;grid-template-columns:72px 1fr;
+  border-bottom:1px solid var(--border);
+  background:var(--surface);transition:background .15s;
+}
+.pstep:last-child{border-bottom:none}
+.pstep:hover{background:#1B1B20}
+.pstep-n{
+  font-family:var(--mono);font-size:11px;color:var(--faint);
+  display:flex;align-items:flex-start;justify-content:center;
+  padding:1.75rem 0;border-right:1px solid var(--border);
+  transition:color .15s;
+}
+.pstep:hover .pstep-n{color:var(--accent)}
+.pstep-b{padding:1.75rem}
+.pstep-b strong{font-size:14px;font-weight:500;display:block;margin-bottom:4px}
+.pstep-b p{font-size:13px;color:var(--muted);line-height:1.7}
+
+/* ── TESTIMONIAL / AVAILABILITY ── */
+.avail-box{
+  border:1px solid var(--border);border-radius:6px;
+  background:var(--surface);padding:2.5rem 3rem;
+  display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;
+}
+.avail-left .label{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem}
+.avail-left h3{font-size:1.3rem;font-weight:500}
+.avail-left p{font-size:13px;color:var(--muted);margin-top:.5rem;max-width:380px;line-height:1.7}
+.avail-badge{
+  display:flex;align-items:center;gap:8px;
+  font-family:var(--mono);font-size:13px;color:var(--accent);
+  background:rgba(0,212,160,.07);border:1px solid rgba(0,212,160,.2);
+  padding:10px 18px;border-radius:4px;white-space:nowrap;
+  flex-shrink:0;
+}
+.avail-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+
+/* ── CONTACT ── */
+.contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+.contact-info h3{font-size:1.5rem;font-weight:500;margin-bottom:1rem;line-height:1.25}
+.contact-info p{color:var(--muted);font-size:14px;line-height:1.85;margin-bottom:2rem}
+.contact-links{display:flex;flex-direction:column;gap:10px}
+.clink{
+  display:flex;align-items:center;gap:12px;padding:12px 16px;
+  border:1px solid var(--border);border-radius:5px;background:var(--surface);
+  text-decoration:none;transition:border-color .15s,background .15s;
+}
+.clink:hover{border-color:var(--border2);background:#1B1B20}
+.clink .clink-icon{font-size:16px;color:var(--muted);width:20px;text-align:center}
+.clink .clink-label{font-size:12px;color:var(--muted);font-family:var(--mono);flex:1}
+.clink .clink-val{font-size:12px;color:var(--text);font-family:var(--mono)}
+.contact-form{display:flex;flex-direction:column;gap:14px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:12px;font-family:var(--mono);color:var(--muted);letter-spacing:.04em}
+.field input,.field textarea,.field select{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:4px;padding:10px 14px;
+  font-family:var(--sans);font-size:14px;color:var(--text);
+  outline:none;transition:border-color .15s;resize:vertical;
+}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--accent2)}
+.field textarea{min-height:110px}
+.field select option{background:var(--bg)}
+.submit-btn{
+  font-family:var(--mono);font-size:13px;letter-spacing:.04em;
+  padding:12px;border-radius:3px;border:none;cursor:pointer;
+  background:var(--accent);color:#090909;font-weight:500;
+  transition:opacity .15s;
+}
+.submit-btn:hover{opacity:.85}
+
+/* ── FOOTER ── */
+footer{
+  padding:1.5rem 6vw;border-top:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;
+  font-family:var(--mono);font-size:11px;color:var(--muted);
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .nav-links{display:none}
+  h1{font-size:2rem}
+  .about-grid{grid-template-columns:1fr}
+  .contact-wrap{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .avail-box{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo"><span class="prompt">~/</span>Soundarya</div>
+  <ul class="nav-links">
+    <li><a href="#about">about</a></li>
+    <li><a href="#skills">skills</a></li>
+    <li><a href="#projects">projects</a></li>
+    <li><a href="#process">process</a></li>
+    <li><a href="#contact">contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-hire">available for hire</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="grid-bg"></div>
+  <div class="glow-blob"></div>
+  <div class="hero-inner">
+    <div class="hero-tag"><div class="dot"></div>Data Analyst · India</div>
+    <h1>
+      I find the story<br>
+      <span class="line2">hiding in your data</span><span class="cursor-blink"></span>
+    </h1>
+    <p class="hero-sub">
+      I help businesses go from <strong>raw, messy data</strong> to
+      <strong>clear, confident decisions</strong> — through analysis, dashboards,
+      and reporting that actually gets used.
+    </p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-p">See my work</a>
+      <a href="#contact" class="btn-g">Work with me</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="n">3</div><div class="l">Projects shipped</div></div>
+      <div class="stat"><div class="n">Python · SQL</div><div class="l">Core stack</div></div>
+      <div class="stat"><div class="n">∞</div><div class="l">Rows cleaned &amp; counting</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="alt-bg">
+  <div class="sec-label">// about</div>
+  <h2>Who I am</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I'm a data analyst based in <strong>India</strong>, focused on making sense of complex datasets and turning them into outputs that drive real decisions — not just pretty charts that get forgotten in a folder.</p>
+      <p>My work sits at the intersection of <strong>technical rigour and clear communication</strong>. I believe the most valuable analysis is one that a non-technical person can act on immediately.</p>
+      <p>Currently building a portfolio of data projects across <strong>real-estate analytics, sports modelling, and e-commerce intelligence</strong>. Open to freelance engagements worldwide.</p>
+    </div>
+    <div class="about-facts">
+      <div class="fact-row"><span class="fk">location</span><span class="fv">India 🇮🇳</span></div>
+      <div class="fact-row"><span class="fk">availability</span><span class="fv" style="color:var(--accent)">Open to projects</span></div>
+      <div class="fact-row"><span class="fk">timezone</span><span class="fv">IST (UTC +5:30)</span></div>
+      <div class="fact-row"><span class="fk">languages</span><span class="fv">English · Hindi · Tamil</span></div>
+      <div class="fact-row"><span class="fk">focus area</span><span class="fv">Data Analytics</span></div>
+      <div class="fact-row"><span class="fk">currently learning</span><span class="fv">Advanced SQL · Tableau</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="sec-label">// toolkit</div>
+  <h2>What I work with</h2>
+  <div class="skills-grid">
+    <div class="sk">
+      <div class="sk-name">Python</div>
+      <div class="sk-sub">Pandas · NumPy · Matplotlib · Seaborn</div>
+      <div class="sk-bar"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span></span></div>
+    </div>
+    <div class="sk">
+      <div class="sk-name">SQL</div>
+      <div class="sk-sub">PostgreSQL · BigQuery · Window functions</div>
+      <div class="sk-bar"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span></span></div>
+    </div>
+    <div class="sk">
+      <div class="sk-name">Tableau</div>
+      <div class="sk-sub">Public dashboards · Calculated fields</div>
+      <div class="sk-bar"><span class="on"></span><span class="on"></span><span class="on"></span><span></span><span></span></div>
+    </div>
+    <div class="sk">
+      <div class="sk-name">Power BI</div>
+      <div class="sk-sub">DAX · Data modelling · Reports</div>
+      <div class="sk-bar"><span class="on"></span><span class="on"></span><span class="on"></span><span></span><span></span></div>
+    </div>
+    <div class="sk">
+      <div class="sk-name">Excel / Sheets</div>
+      <div class="sk-sub">Pivot tables · VLOOKUP · Automation</div>
+      <div class="sk-bar"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span></div>
+    </div>
+    <div class="sk">
+      <div class="sk-name">Storytelling</div>
+      <div class="sk-sub">Translating analysis into decisions</div>
+      <div class="sk-bar"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="alt-bg">
+  <div class="sec-label">// work</div>
+  <h2>Featured projects</h2>
+  <div class="proj-grid">
+
+    <div class="proj">
+      <span class="proj-num">01</span>
+      <span class="proj-tag tg">Geospatial · Python</span>
+      <h3>Mumbai Housing Affordability Pulse</h3>
+      <p>Scraped 3 years of MagicBricks listings to map how rent-to-income ratios have shifted across 20 Mumbai neighbourhoods. Reveals which areas are becoming inaccessible — and which are still underpriced.</p>
+      <div class="proj-insight">Andheri East showed a 34% affordability decline in 24 months</div>
+      <div class="chips">
+        <span class="chip">Python</span>
+        <span class="chip">Selenium</span>
+        <span class="chip">Pandas</span>
+        <span class="chip">Folium</span>
+        <span class="chip">Plotly</span>
+      </div>
+      <div class="proj-links">
+        <a href="#">→ Live demo</a>
+        <a href="#">→ GitHub</a>
+        <a href="#">→ Case study</a>
+      </div>
+    </div>
+
+    <div class="proj">
+      <span class="proj-num">02</span>
+      <span class="proj-tag ta">ML · Sports Analytics</span>
+      <h3>IPL Live Win Probability Engine</h3>
+      <p>Ball-by-ball win probability model trained on 15 seasons of IPL data. Tracks momentum shifts in real time, compares team performance vs historical benchmarks. Deployed as a live Streamlit app.</p>
+      <div class="proj-insight">87% accuracy in predicting match outcomes at the halfway point</div>
+      <div class="chips">
+        <span class="chip">Python</span>
+        <span class="chip">XGBoost</span>
+        <span class="chip">scikit-learn</span>
+        <span class="chip">Streamlit</span>
+      </div>
+      <div class="proj-links">
+        <a href="#">→ Live app</a>
+        <a href="#">→ GitHub</a>
+        <a href="#">→ Case study</a>
+      </div>
+    </div>
+
+    <div class="proj">
+      <span class="proj-num">03</span>
+      <span class="proj-tag tb">Dashboard · SQL · Power BI</span>
+      <h3>D2C Brand Health Dashboard</h3>
+      <p>Built a full analytics stack for a fictional skincare brand — synthetic Shopify data, SQL cohort model, Power BI dashboard. Tracks CAC, LTV, churn rate, and repeat purchase rate across 12 months.</p>
+      <div class="proj-insight">Identified a 60-day cohort drop-off that implied a ₹18L annual revenue leak</div>
+      <div class="chips">
+        <span class="chip">SQL</span>
+        <span class="chip">Power BI</span>
+        <span class="chip">DAX</span>
+        <span class="chip">Python</span>
+      </div>
+      <div class="proj-links">
+        <a href="#">→ Live dashboard</a>
+        <a href="#">→ GitHub</a>
+        <a href="#">→ Case study</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="sec-label">// how I work</div>
+  <h2>My process</h2>
+  <div class="process">
+    <div class="pstep">
+      <div class="pstep-n">01</div>
+      <div class="pstep-b"><strong>Understand the question first</strong><p>Before touching any data — what decision does this analysis need to enable? A sharp question produces a useful answer. A vague brief produces a beautiful dashboard nobody acts on.</p></div>
+    </div>
+    <div class="pstep">
+      <div class="pstep-n">02</div>
+      <div class="pstep-b"><strong>Audit &amp; clean ruthlessly</strong><p>Real-world data is always messier than expected. I document every cleaning decision so results are reproducible, auditable, and defensible when someone questions a number.</p></div>
+    </div>
+    <div class="pstep">
+      <div class="pstep-n">03</div>
+      <div class="pstep-b"><strong>Explore without a hypothesis</strong><p>Genuine exploratory analysis — no confirmation bias. I let the data surface surprises before moving to structure. The best insights usually weren't in the original brief.</p></div>
+    </div>
+    <div class="pstep">
+      <div class="pstep-n">04</div>
+      <div class="pstep-b"><strong>Build for the decision-maker</strong><p>Dashboard, report, or notebook — designed for the person who has to act on it, not the person who ran the analysis. If they need a PhD to read it, it hasn't been finished.</p></div>
+    </div>
+    <div class="pstep">
+      <div class="pstep-n">05</div>
+      <div class="pstep-b"><strong>Deliver with narrative</strong><p>Every deliverable comes with a plain-language summary: what the data shows, why it matters, and what to do next. Numbers without story get filed and forgotten.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- AVAILABILITY BANNER -->
+<section class="alt-bg" style="padding:48px 6vw">
+  <div class="avail-box">
+    <div class="avail-left">
+      <div class="label">current status</div>
+      <h3>Open to freelance projects</h3>
+      <p>Available for data analytics engagements — dashboards, one-off analyses, reporting pipelines, or ongoing retainers. India-based, works with clients worldwide.</p>
+    </div>
+    <div class="avail-badge"><div class="avail-dot"></div>Available now</div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="sec-label">// contact</div>
+  <h2>Let's work together</h2>
+  <div class="contact-wrap">
+    <div class="contact-info">
+      <h3>Have data.<br>Need clarity?</h3>
+      <p>Tell me about your project — what data you have, what decisions you're trying to make, and what you've already tried. I'll get back within 24 hours.</p>
+      <div class="contact-links">
+        <a href="mailto:soundaryaxai@gmail.com" class="clink">
+          <span class="clink-icon">✉</span>
+          <span class="clink-label">email</span>
+          <span class="clink-val">soundaryaxai@gmail.com</span>
+        </a>
+        <a href="https://www.linkedin.com/in/soundarya-babu-9a46b735a/" class="clink">
+          <span class="clink-icon">in</span>
+          <span class="clink-label">linkedin</span>
+          <span class="clink-val">linkedin.com/in/soundarya-babu-9a46b735a</span>
+        </a>
+        <a href="https://github.com/soundaryaXai" class="clink">
+          <span class="clink-icon">gh</span>
+          <span class="clink-label">github</span>
+          <span class="clink-val">github.com/soundaryaXai</span>
+        </a>
+        <a href="#" class="clink">
+          <span class="clink-icon">↑</span>
+          <span class="clink-label">upwork</span>
+          <span class="clink-val">upwork.com/fl/soundarya</span>
+        </a>
+      </div>
+    </div>
+    <div>
+      <div class="contact-form">
+        <div class="form-row">
+          <div class="field"><label>name</label><input type="text" placeholder="Your name"></div>
+          <div class="field"><label>email</label><input type="email" placeholder="your@email.com"></div>
+        </div>
+        <div class="field">
+          <label>project type</label>
+          <select>
+            <option value="">Select one...</option>
+            <option>Dashboard / visualisation</option>
+            <option>Data cleaning &amp; analysis</option>
+            <option>Reporting pipeline</option>
+            <option>One-off deep dive</option>
+            <option>Ongoing retainer</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field"><label>message</label><textarea placeholder="Tell me about your data and what you're trying to understand..."></textarea></div>
+        <button class="submit-btn" onclick="this.textContent='Message sent ✓';this.style.background='var(--accent2)'">Send message</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>Soundarya · Data Analyst · India</span>
+  <span>Built from scratch. No templates.</span>
+</footer>
+
+</body>
+</html>
